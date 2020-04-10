@@ -25,7 +25,7 @@ namespace PhysicsExperiment
             PhysicsTimer.Enabled = true;
         }
 
-        Item B1 = new Item(100,220,15,0.25F,5,0.025F);
+        Item B1 = new Item(100,220,15,0.25F,10,0.1F);
         Pen linePen = new Pen(Color.DarkGray, 1);
         Pen B1Pen = new Pen(Color.DarkBlue, 2) { Alignment = PenAlignment.Inset };
 
@@ -38,9 +38,10 @@ namespace PhysicsExperiment
 
         private void PhysicsTimer_Tick(object sender, EventArgs e)
         {
-            DrawingPanel.Invalidate(B1.BoundingBox());
+            Rectangle oldarea = B1.BoundingBox();
             B1.Move();
-            DrawingPanel.Invalidate(B1.BoundingBox());
+            Rectangle newarea = B1.BoundingBox();
+            DrawingPanel.Invalidate(Rectangle.Union(oldarea,newarea));
         }
     }
 }
