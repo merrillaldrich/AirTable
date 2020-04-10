@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicsExperiment", "PhysicsExperiment\PhysicsExperiment.csproj", "{157C516E-A994-4A60-A6AD-5E56CB34F18A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{157C516E-A994-4A60-A6AD-5E56CB34F18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157C516E-A994-4A60-A6AD-5E56CB34F18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157C516E-A994-4A60-A6AD-5E56CB34F18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157C516E-A994-4A60-A6AD-5E56CB34F18A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C76F8D19-DCAE-4733-9623-FB44415F9451}
+	EndGlobalSection
+EndGlobal
