@@ -20,5 +20,14 @@ namespace PhysicsExperiment
         {
             return new Rectangle(Extents.Location, Extents.Size);
         }
+
+        public float Angle
+        {
+            get
+            {
+                float angle = Extents.Width > Extents.Height ? 0 : 90;
+                return angle;
+            }
+        }
     }
 }

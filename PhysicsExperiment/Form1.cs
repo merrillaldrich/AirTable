@@ -26,7 +26,7 @@ namespace PhysicsExperiment
             PhysicsTimer.Enabled = true;
         }
 
-        Item B1 = new Item(100,220,15,0.25F,new Velocity(15,0),0.1F);
+        Item B1 = new Item(100,260,15,0.25F,new Velocity(20,10),0.1F);
         Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
 
         Pen linePen = new Pen(Color.DarkGray, 1);
@@ -58,15 +58,26 @@ namespace PhysicsExperiment
             {
                 if( B1.Position.X + B1.Radius >= W1.Extents.X)
                 {
-                    // Objects collided - change velocity/direction
-                    // For the 1 D version, just change the sign of velocity
-                    // and substract some to mimic friction
 
                     // For the 2D version, change the direction property of the 
                     // velocity to 180 degrees different, and reduce the speed
                     // property to mimic friction
 
-                    B1.V.Direction += 180;
+                    // B1.V.Direction += 180;
+
+                    // Demo explicit calculation of the angle of reflection
+
+                    // float WallAngle = W1.Angle;
+                    // float moveTo0 = B1.V.Direction - WallAngle;
+                    // float reflect = moveTo0 * -1;
+                    // float moveBack = reflect + WallAngle;
+                    // B1.V.Direction = moveBack;
+
+                    // With some algebra this simplifies to
+                    // B1.V.Direction = -(B1.V.Direction - W1.Angle) + W1.Angle;
+
+                    B1.V.Direction = W1.Angle - (B1.V.Direction - W1.Angle);
+
                     B1.V.Speed = B1.V.Speed * 0.8f;
                 }
             }
