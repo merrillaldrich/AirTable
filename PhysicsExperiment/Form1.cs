@@ -26,15 +26,19 @@ namespace PhysicsExperiment
             PhysicsTimer.Enabled = true;
         }
 
-        Item B1 = new Item(100,220,15,0.25F,10,0.1F);
+        Item B1 = new Item(100,220,15,0.25F,12,0.1F);
+        Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
+
         Pen linePen = new Pen(Color.DarkGray, 1);
+        Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
         Pen B1Pen = new Pen(Color.DarkBlue, 2) { Alignment = PenAlignment.Inset };
 
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.DrawLine(linePen, 10, 220, DrawingPanel.Width - 10, 220);
-            e.Graphics.DrawCircle(B1Pen, B1.XPosition, B1.YPosition, B1.Radius);
+            e.Graphics.DrawRectangle(wallPen, W1.Extents);
+            e.Graphics.DrawCircle(B1Pen, B1.X, B1.Y, B1.Radius);
         }
 
         private void PhysicsTimer_Tick(object sender, EventArgs e)
@@ -42,7 +46,24 @@ namespace PhysicsExperiment
             Rectangle oldarea = B1.BoundingBox();
             B1.Move();
             Rectangle newarea = B1.BoundingBox();
+
+            CalculateCollisions();
+
             DrawingPanel.Invalidate(Rectangle.Union(oldarea,newarea));
+        }
+
+        private void CalculateCollisions()
+        {
+            if(  B1.BoundingBox().IntersectsWith ( W1.BoundingBox()))
+            {
+                if( B1.X + B1.Radius >= W1.Extents.X)
+                {
+                    // Objects collided - change velocity/direction
+                    // For the 1 D version, just change the sign of velocity
+                    // and substract some to mimic friction
+                    B1.Velocity = (B1.Velocity * 0.8f) * -1;
+                }
+            }
         }
     }
 }

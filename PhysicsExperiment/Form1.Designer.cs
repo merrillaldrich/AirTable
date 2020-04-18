@@ -37,7 +37,7 @@
             // 
             this.DrawingPanel.Location = new System.Drawing.Point(12, 12);
             this.DrawingPanel.Name = "DrawingPanel";
-            this.DrawingPanel.Size = new System.Drawing.Size(1550, 905);
+            this.DrawingPanel.Size = new System.Drawing.Size(750, 465);
             this.DrawingPanel.TabIndex = 0;
             this.DrawingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingPanel_Paint);
             // 
@@ -48,9 +48,8 @@
             // 
             // PhysicsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1574, 929);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(774, 489);
             this.Controls.Add(this.DrawingPanel);
             this.Name = "PhysicsForm";
             this.Text = "Form1";
