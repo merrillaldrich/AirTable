@@ -20,6 +20,7 @@ namespace PhysicsExperiment
 
         public PointF ApplyTo(PointF position)
         {
+            // In degrees: dx = Speed * cos( direction ); convert degrees to radians for sin(),cos()
             float dx = (float)(Speed * (Math.Cos(Math.PI / 180 * Direction)));
             float dy = (float)(Speed * (Math.Sin(Math.PI / 180 * Direction)));
             return new PointF(position.X + dx, position.Y + dy);
