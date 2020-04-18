@@ -26,7 +26,7 @@ namespace PhysicsExperiment
             PhysicsTimer.Enabled = true;
         }
 
-        Item B1 = new Item(100,260,15,0.25F,new Velocity(20,15),0.1F);
+        Item B1 = new Item(500, 260, 15, 0.25F, new Velocity(15, 25), 0.05F);
         Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
         Wall W2 = new Wall(new Rectangle(10, 10, 700, 10));
 
@@ -49,14 +49,15 @@ namespace PhysicsExperiment
 
             CalculateCollisions();
 
-            DrawingPanel.Invalidate(Rectangle.Union(oldarea,newarea));
+            DrawingPanel.Invalidate(Rectangle.Union(oldarea, newarea));
         }
 
         private void CalculateCollisions()
         {
-            if(  B1.BoundingBox().IntersectsWith ( W1.BoundingBox()))
+
+            if (B1.BoundingBox().IntersectsWith(W1.BoundingBox()))
             {
-                if( B1.Position.X + B1.Radius >= W1.Extents.X)
+                if (W1.distTo(B1.Position) < B1.Radius)
                 {
 
                     // Compute the new direction our item is heading based on angle of incidence
@@ -67,16 +68,14 @@ namespace PhysicsExperiment
             }
             if (B1.BoundingBox().IntersectsWith(W2.BoundingBox()))
             {
-                if (B1.Position.Y - B1.Radius <= W2.Extents.Y + W2.Extents.Height)
+                if (W2.distTo(B1.Position) < B1.Radius)
                 {
 
-                    // Compute the new direction our item is heading based on angle of incidence
                     B1.V.Direction = W2.Angle - (B1.V.Direction - W2.Angle);
                     B1.V.Speed = B1.V.Speed * 0.8f;
 
                 }
             }
-
         }
     }
 }
