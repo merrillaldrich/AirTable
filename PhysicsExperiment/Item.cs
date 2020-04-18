@@ -10,51 +10,32 @@ namespace PhysicsExperiment
     class Item
     {
         public float Mass { get; set; }
-        public float Velocity { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
+        public Velocity V { get; set; }
+        public PointF Position { get; set; }
         public float Radius { get; set; }
         public float Friction { get; set; }
-        public Item( float x, float y, float radius, float mass, float velocity, float friction )
+        public Item( float x, float y, float radius, float mass, Velocity velocity, float friction )
         {
-            X = x;
-            Y = y;
+            Position = new PointF(x, y);
             Radius = radius;
             Mass = mass;
-            Velocity = velocity;
+            V = velocity;
             Friction = friction;
         }
 
         public void Move()
-        {          
-            X += Velocity;
+        {
+            // Move the item by one increment ("Apply" the velocity once)
+            Position = V.ApplyTo(Position);
 
-            if (Velocity > 0)
-            {
-                if (Velocity - Friction > 0)
-                {
-                    Velocity -= Friction;
-                }
-                else
-                {
-                    Velocity = 0;
-                }           
-            } else if( Velocity < 0 ) {
-                if (Velocity + Friction < 0)
-                {
-                    Velocity += Friction;
-                }
-                else {
-                    Velocity = 0;
-                }
-            }
-            
+            // Adjust the velocity to remove speed due to friction
+            V.ApplyFriction(Friction);     
         }
 
         public Rectangle BoundingBox()
         {
             int padding = 2;
-            return new Rectangle((int)(X - Radius) - padding, (int)(Y - Radius) - padding, (int)(2*Radius) + (2*padding), (int)(2*Radius) + (2*padding));
+            return new Rectangle((int)(Position.X - Radius) - padding, (int)(Position.Y - Radius) - padding, (int)(2*Radius) + (2*padding), (int)(2*Radius) + (2*padding));
         }
     }
 }

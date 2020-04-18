@@ -26,7 +26,7 @@ namespace PhysicsExperiment
             PhysicsTimer.Enabled = true;
         }
 
-        Item B1 = new Item(100,220,15,0.25F,12,0.1F);
+        Item B1 = new Item(100,220,15,0.25F,new Velocity(15,0),0.1F);
         Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
 
         Pen linePen = new Pen(Color.DarkGray, 1);
@@ -38,7 +38,7 @@ namespace PhysicsExperiment
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.DrawLine(linePen, 10, 220, DrawingPanel.Width - 10, 220);
             e.Graphics.DrawRectangle(wallPen, W1.Extents);
-            e.Graphics.DrawCircle(B1Pen, B1.X, B1.Y, B1.Radius);
+            e.Graphics.DrawCircle(B1Pen, B1.Position.X, B1.Position.Y, B1.Radius);
         }
 
         private void PhysicsTimer_Tick(object sender, EventArgs e)
@@ -56,12 +56,18 @@ namespace PhysicsExperiment
         {
             if(  B1.BoundingBox().IntersectsWith ( W1.BoundingBox()))
             {
-                if( B1.X + B1.Radius >= W1.Extents.X)
+                if( B1.Position.X + B1.Radius >= W1.Extents.X)
                 {
                     // Objects collided - change velocity/direction
                     // For the 1 D version, just change the sign of velocity
                     // and substract some to mimic friction
-                    B1.Velocity = (B1.Velocity * 0.8f) * -1;
+
+                    // For the 2D version, change the direction property of the 
+                    // velocity to 180 degrees different, and reduce the speed
+                    // property to mimic friction
+
+                    B1.V.Direction += 180;
+                    B1.V.Speed = B1.V.Speed * 0.8f;
                 }
             }
         }
