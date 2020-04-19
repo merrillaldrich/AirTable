@@ -9,57 +9,78 @@ namespace PhysicsExperiment
 {
     class Wall
     {
-        public Rectangle Extents { get; set; }
+        //public Rectangle Extents { get; set; }
 
-        public Wall(Rectangle extents)
+        public PointF[] Shape = new PointF[4];
+
+        public Wall(PointF start, PointF end)
         {
-            Extents = new Rectangle(extents.Location, extents.Size);
+            // A wall is constructed from a base line that is one of the long sides
+            // then expanded by computing a parallel line to that and storing
+            // the four resulting points that form a rectangle
+            // Technique from https://stackoverflow.com/questions/2825412/draw-a-parallel-line
+
+            var x1 = start.X;
+            var y1 = start.Y;
+            var x2 = end.X;
+            var y2 = end.Y;
+
+            var L = (float)Math.Sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+
+            var offsetPixels = 10.0f;
+
+            // This is the second line
+            var x1p = x1 + offsetPixels * (y2 - y1) / L;
+            var y1p = y1 + offsetPixels * (x1 - x2) / L;
+            var x2p = x2 + offsetPixels * (y2 - y1) / L;
+            var y2p = y2 + offsetPixels * (x1 - x2) / L;
+
+            Shape[0] = start;
+            Shape[1] = end;
+            Shape[2] = new PointF(x2p, y2p);
+            Shape[3] = new PointF(x1p, y1p);
         }
 
         public Rectangle BoundingBox()
         {
-            return new Rectangle(Extents.Location, Extents.Size);
+            float padding = 1;
+            float minX = 1000000;
+            float maxX = 0;
+            float minY = 1000000;
+            float maxY = 0;
+
+            foreach (PointF p in Shape)
+            {
+                minX = Math.Min(minX, p.X);
+                maxX = Math.Max(maxX, p.X);
+                minY = Math.Min(minY, p.Y);
+                maxY = Math.Max(maxY, p.Y);
+            }
+            return new Rectangle(
+                (int)(minX - padding),
+                (int)(minY - padding),
+                (int)((maxX - minX) + 2 * padding),
+                (int)((maxY - minY) + 2 * padding)
+                );
         }
 
         public float Angle
         {
             get
             {
-                float angle = Extents.Width > Extents.Height ? 0 : 90;
+                // Return the angle of the base line of the wall
+                // atan(opposite/adjacent)
+                float angle;
+                float dy = Shape[1].Y - Shape[0].Y;
+                float dx = Shape[1].X - Shape[0].X;
+                if (dy == 0) { angle = 0; }
+                else if (dx == 0) { angle = 90; }
+                else { angle = (float)(Math.Atan(-dy / dx) * 180 / Math.PI); }
                 return angle;
             }
         }
 
-        public PointF TopLeft
-        {
-            get
-            {
-                return new PointF(Extents.Left, Extents.Top);
-            }
-        }
-        public PointF TopRight
-        {
-            get
-            {
-                return new PointF(Extents.Right, Extents.Top);
-            }
-        }
-        public PointF BottomLeft
-        {
-            get
-            {
-                return new PointF(Extents.Left, Extents.Bottom );
-            }
-        }
-        public PointF BottomRight
-        {
-            get
-            {
-                return new PointF(Extents.Right, Extents.Bottom);
-            }
-        }
-
-        public float distToEdge( PointF p, PointF l1, PointF l2)
+        public float distToEdge(PointF p, PointF l1, PointF l2)
         {
             // Repurposed logic from this solution
             // https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
@@ -102,17 +123,21 @@ namespace PhysicsExperiment
         }
         public float distTo(PointF p)
         {
-            float result;
+            // For each edge of the wall shape compute the perpendicular distance,
+            // then return the minimum (the closest distance between some
+            // part of the shape and the point)
 
-            var d1 = distToEdge(p, this.TopLeft, this.TopRight);
-            var d2 = distToEdge(p, this.TopRight, this.BottomRight);
-            result = Math.Min(d1, d2);
-            var d3 = distToEdge(p, this.BottomRight, this.BottomLeft);
-            result = Math.Min(result, d3);
-            var d4 = distToEdge(p, this.BottomLeft, this.TopLeft);
-            result = Math.Min(result, d4);
+            float result = 100000000f;
+            float currentDist;
+            int j;
+
+            for (int i = 0; i < 4; i++)
+            {
+                j = i < 3 ? i + 1 : 0;
+                currentDist = distToEdge(p, Shape[i], Shape[j]);
+                result = Math.Min(currentDist, result);
+            }
             return result;
-
         }
     }
 }

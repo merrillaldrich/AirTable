@@ -27,8 +27,9 @@ namespace PhysicsExperiment
         }
 
         Item B1 = new Item(500, 260, 15, 0.25F, new Velocity(15, 25), 0.05F);
-        Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
-        Wall W2 = new Wall(new Rectangle(10, 10, 700, 10));
+        Wall W1 = new Wall(new PointF(700, 10), new PointF(700, 440)); //(new Rectangle(700, 10, 10, 440));
+        Wall W2 = new Wall(new PointF(10, 10), new PointF(710, 10)); //(new Rectangle(10, 10, 700, 10));
+        Wall W3 = new Wall(new PointF(100, 30), new PointF(400, 250));
 
         Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
         Pen B1Pen = new Pen(Color.DarkBlue, 2) { Alignment = PenAlignment.Inset };
@@ -36,8 +37,9 @@ namespace PhysicsExperiment
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.DrawRectangle(wallPen, W1.Extents);
-            e.Graphics.DrawRectangle(wallPen, W2.Extents);
+            e.Graphics.DrawPolygon(wallPen, W1.Shape);
+            e.Graphics.DrawPolygon(wallPen, W2.Shape);
+            e.Graphics.DrawPolygon(wallPen, W3.Shape);
             e.Graphics.DrawCircle(B1Pen, B1.Position.X, B1.Position.Y, B1.Radius);
         }
 
@@ -59,23 +61,28 @@ namespace PhysicsExperiment
             {
                 if (W1.distTo(B1.Position) < B1.Radius)
                 {
-
                     // Compute the new direction our item is heading based on angle of incidence
                     B1.V.Direction = W1.Angle - (B1.V.Direction - W1.Angle);
                     B1.V.Speed = B1.V.Speed * 0.8f;
-
                 }
             }
             if (B1.BoundingBox().IntersectsWith(W2.BoundingBox()))
             {
                 if (W2.distTo(B1.Position) < B1.Radius)
                 {
-
                     B1.V.Direction = W2.Angle - (B1.V.Direction - W2.Angle);
                     B1.V.Speed = B1.V.Speed * 0.8f;
-
                 }
             }
+            if (B1.BoundingBox().IntersectsWith(W3.BoundingBox()))
+            {
+                if (W3.distTo(B1.Position) < B1.Radius)
+                {
+                    B1.V.Direction = W3.Angle - (B1.V.Direction - W3.Angle);
+                    B1.V.Speed = B1.V.Speed * 0.8f;
+                }
+            }
+
         }
     }
 }
