@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace PhysicsExperiment
 {
@@ -36,6 +38,12 @@ namespace PhysicsExperiment
         {
             int padding = 2;
             return new Rectangle((int)(Position.X - Radius) - padding, (int)(Position.Y - Radius) - padding, (int)(2*Radius) + (2*padding), (int)(2*Radius) + (2*padding));
+        }
+
+        public void Paint(PaintEventArgs e)
+        {
+            Pen B1Pen = new Pen(Color.DarkBlue, 2) { Alignment = PenAlignment.Inset };
+            e.Graphics.DrawCircle(B1Pen, Position.X, Position.Y, Radius);
         }
     }
 }

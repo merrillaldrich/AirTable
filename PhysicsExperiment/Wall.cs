@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PhysicsExperiment
 {
@@ -62,6 +64,12 @@ namespace PhysicsExperiment
                 (int)((maxX - minX) + 2 * padding),
                 (int)((maxY - minY) + 2 * padding)
                 );
+        }
+
+        public void Paint(PaintEventArgs e)
+        {
+            Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
+            e.Graphics.DrawPolygon(wallPen, Shape);
         }
 
         public float Angle
