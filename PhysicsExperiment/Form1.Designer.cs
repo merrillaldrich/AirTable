@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.DrawingPanel = new System.Windows.Forms.Panel();
-            this.PhysicsTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // DrawingPanel
@@ -40,11 +38,6 @@
             this.DrawingPanel.Size = new System.Drawing.Size(750, 465);
             this.DrawingPanel.TabIndex = 0;
             this.DrawingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingPanel_Paint);
-            // 
-            // PhysicsTimer
-            // 
-            this.PhysicsTimer.Interval = 50;
-            this.PhysicsTimer.Tick += new System.EventHandler(this.PhysicsTimer_Tick);
             // 
             // PhysicsForm
             // 
@@ -61,7 +54,6 @@
         #endregion
 
         private System.Windows.Forms.Panel DrawingPanel;
-        private System.Windows.Forms.Timer PhysicsTimer;
     }
 }
 

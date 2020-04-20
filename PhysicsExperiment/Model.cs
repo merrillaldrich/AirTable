@@ -19,12 +19,12 @@ namespace PhysicsExperiment
                 500,   // x position
                 260,   // y position
                 15,    // radius
-                0.25F, //mass
+                0.25F, // mass
                 new Velocity(
-                    15, // speed
+                    10, // starting speed in approximately pixels/second
                     25  // direction (degrees from +x counterclockwise)
                     ), 
-                0.05F   // friction
+                0.00001F   // friction
                 );
             MoveableObjects.Add(B1);
 

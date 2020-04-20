@@ -17,17 +17,22 @@ namespace PhysicsExperiment
         public PhysicsForm()
         {
             InitializeComponent();
+            this.timer.Elapsed += this.Timer_Elapsed;
+
             DoubleBuffered = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, DrawingPanel, new object[] { true });
-            PhysicsTimer.Enabled = true;
+            timer.Enabled = true;
         }
 
         Model m = new Model();
+        HiResTimer timer = new HiResTimer(0.5f);
 
+        int frameCounter = 0;
+        int paintInterval = 25;
 
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -35,11 +40,21 @@ namespace PhysicsExperiment
             m.Paint(e);
         }
 
-        private void PhysicsTimer_Tick(object sender, EventArgs e)
+        private void Timer_Elapsed(object sender, HiResTimerElapsedEventArgs e)
         {
+            if (frameCounter < paintInterval)
+            {
+                frameCounter += 1;
+            }
+            else { 
+                frameCounter = 0; 
+            }
             m.Move();
             m.CalculateCollisions();
-            DrawingPanel.Invalidate();
+            if (frameCounter == 0)
+            {
+                DrawingPanel.Invalidate();
+            }
         }
     }
 }
