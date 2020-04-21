@@ -14,7 +14,7 @@ namespace PhysicsExperiment
 
         public Velocity(float speed, float direction)
         {
-            Speed = speed/10;
+            Speed = speed/100;
             Direction = direction;
         }
 

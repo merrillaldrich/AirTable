@@ -21,10 +21,10 @@ namespace PhysicsExperiment
                 15,    // radius
                 0.25F, // mass
                 new Velocity(
-                    10, // starting speed in approximately pixels/second
-                    25  // direction (degrees from +x counterclockwise)
-                    ), 
-                0.00001F   // friction
+                    50, // starting speed in approximately pixels/second
+                    25  // starting direction (degrees from +x counterclockwise)
+                    ),
+                0.002F   // friction
                 );
             MoveableObjects.Add(B1);
 
@@ -55,13 +55,35 @@ namespace PhysicsExperiment
             {
                 foreach (Wall w in FixedObjects)
                 {
-                    if (i.BoundingBox().IntersectsWith(w.BoundingBox()))
+                    if (w.distTo(i.Position) < i.Radius)
                     {
-                        if (w.distTo(i.Position) < i.Radius)
+                        // Solving this problem: if objects collide at a slow speed with a high 
+                        // frame rate then the collision logic gets processed more than once,
+                        // which has the effect of making the item get "stuck," as
+                        // the velocity vector is changed over and over before the item 
+                        // moves far enough away not to be detected as in collision any longer
+
+                        // Save the collision to a list of processed collisions for the object
+                        // which we will use to indicate the effect of this collision
+                        // has already been applied
+
+                        if (!i.ProcessedCollisions.Contains(w))
                         {
                             // Compute the new direction our item is heading based on angle of incidence
                             i.V.Direction = w.Angle - (i.V.Direction - w.Angle);
                             i.V.Speed = i.V.Speed * 0.8f;
+
+                            // Record that this change is applied
+                            i.ProcessedCollisions.Add(w);
+                        }
+                    }
+                    else
+                    {
+                        // The two objects are out of range, so if we recently processed a collision
+                        // between then remove this wall from the processed collisions list
+                        if (i.ProcessedCollisions.Contains(w))
+                        {
+                            i.ProcessedCollisions.Remove(w);
                         }
                     }
                 }

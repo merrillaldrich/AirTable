@@ -29,10 +29,10 @@ namespace PhysicsExperiment
         }
 
         Model m = new Model();
-        HiResTimer timer = new HiResTimer(0.5f);
+        HiResTimer timer = new HiResTimer(1f);
 
         int frameCounter = 0;
-        int paintInterval = 25;
+        int paintInterval = 20;
 
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
         {

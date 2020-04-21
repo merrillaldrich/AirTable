@@ -16,14 +16,17 @@ namespace PhysicsExperiment
         public PointF Position { get; set; }
         public float Radius { get; set; }
         public float Friction { get; set; }
+
+        public List<Wall> ProcessedCollisions = new List<Wall>();
         public Item( float x, float y, float radius, float mass, Velocity velocity, float friction )
         {
             Position = new PointF(x, y);
             Radius = radius;
             Mass = mass;
             V = velocity;
-            Friction = friction;
+            Friction = friction/100;
         }
+
 
         public void Move()
         {
