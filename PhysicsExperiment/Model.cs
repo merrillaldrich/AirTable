@@ -128,11 +128,8 @@ namespace PhysicsExperiment
                             float o2Speed = o2.V.Speed;
                             float o2Direction = o2.V.Direction;
 
-                            // Note this *100 is because velocity is expressed including
-                            // our "frame rate" of incremental calculations
-
-                            o1.V = new Velocity(o2Speed * 100, o2Direction);
-                            o2.V = new Velocity(o1Speed * 100, o1Direction);
+                            o1.V = new Velocity(o2Speed, o2Direction);
+                            o2.V = new Velocity(o1Speed, o1Direction);
 
                             // Record that this change is applied
                             o1.ProcessedCollisions.Add(o2);

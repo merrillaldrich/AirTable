@@ -24,7 +24,7 @@ namespace PhysicsExperiment
             Radius = radius;
             Mass = mass;
             V = velocity;
-            Friction = friction/100;
+            Friction = friction;
         }
 
 

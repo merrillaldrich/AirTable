@@ -12,16 +12,18 @@ namespace PhysicsExperiment
         public float Speed { get; set; }
         public float Direction { get; set; }
 
+        private readonly int FrameRate = 100;
+
         public Velocity(float speed, float direction)
         {
-            Speed = speed/100;
+            Speed = speed;
             Direction = direction;
         }
 
         public PointF ApplyTo(PointF position)
         {
-            float dx = (float)(Speed * (Math.Cos(Math.PI / 180 * Direction)));
-            float dy = -(float)(Speed * (Math.Sin(Math.PI / 180 * Direction)));
+            float dx = (float)((Speed/FrameRate) * (Math.Cos(Math.PI / 180 * Direction)));
+            float dy = -(float)((Speed/FrameRate) * (Math.Sin(Math.PI / 180 * Direction)));
             return new PointF(position.X + dx, position.Y + dy);
         }
 
