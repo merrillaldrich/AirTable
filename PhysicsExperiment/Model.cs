@@ -115,6 +115,25 @@ namespace PhysicsExperiment
                             // A collision is detected (for the first time)
                             Console.WriteLine("Smash");
 
+                            // For the simplest, staring case two objects collide
+                            // exactly in a line (the x direction) and have the same 
+                            // mass. In order to conserve momentum, the momentum of
+                            // each of the two colliding objects are exchanged. And because  
+                            // mass of the objects in this simple example is the same,
+                            // we can just exchange their velocities:
+
+                            float o1Speed = o1.V.Speed;
+                            float o1Direction = o1.V.Direction;
+
+                            float o2Speed = o2.V.Speed;
+                            float o2Direction = o2.V.Direction;
+
+                            // Note this *100 is because velocity is expressed including
+                            // our "frame rate" of incremental calculations
+
+                            o1.V = new Velocity(o2Speed * 100, o2Direction);
+                            o2.V = new Velocity(o1Speed * 100, o1Direction);
+
                             // Record that this change is applied
                             o1.ProcessedCollisions.Add(o2);
                         }
