@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PhysicsExperiment
 {
-    class Wall
+    class Wall : PhysicsObject
     {
         //public Rectangle Extents { get; set; }
 
@@ -129,7 +129,7 @@ namespace PhysicsExperiment
             return (float)Math.Sqrt(dx * dx + dy * dy);
 
         }
-        public float distTo(PointF p)
+        public float DistTo(PointF p)
         {
             // For each edge of the wall shape compute the perpendicular distance,
             // then return the minimum (the closest distance between some
