@@ -21,7 +21,7 @@ namespace PhysicsExperiment
                 15,    // radius
                 0.25F, // mass
                 new Velocity(
-                    0, // starting speed in approximately pixels/second
+                    20, // starting speed in approximately pixels/second
                     0  // starting direction (degrees from +x counterclockwise)
                     ),
                 0.002F   // friction
@@ -35,7 +35,7 @@ namespace PhysicsExperiment
                 0.25F, // mass
                 new Velocity(
                     50, // starting speed in approximately pixels/second
-                    180  // starting direction (degrees from +x counterclockwise)
+                    0 // starting direction (degrees from +x counterclockwise)
                     ),
                 0.002F   // friction
                 );
@@ -115,12 +115,12 @@ namespace PhysicsExperiment
                             // A collision is detected (for the first time)
                             Console.WriteLine("Smash");
 
-                            // For the simplest, staring case two objects collide
+                            // For the simplest, starting case two objects collide
                             // exactly in a line (the x direction) and have the same 
-                            // mass. In order to conserve momentum, the momentum of
+                            // mass. In order to conserve momentum, the momenta of
                             // each of the two colliding objects are exchanged. And because  
                             // mass of the objects in this simple example is the same,
-                            // we can just exchange their velocities:
+                            // we can just exchange their velocities, and the masses cancel:
 
                             float o1Speed = o1.V.Speed;
                             float o1Direction = o1.V.Direction;

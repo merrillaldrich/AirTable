@@ -16,7 +16,22 @@ namespace PhysicsExperiment
 
         public Velocity(float speed, float direction)
         {
-            Speed = speed;
+            // Normalize the direction to be a positive number of
+            // degrees from the x axis counter-clockwise, < 360
+            // and the speed always to be positive
+
+            if (speed < 0)
+            {
+                direction -= 180;
+            }
+            Speed = Math.Abs(speed);
+
+            direction = direction % 360;
+            if (direction < 0)
+            {
+                direction += 360;
+            }
+
             Direction = direction;
         }
 
