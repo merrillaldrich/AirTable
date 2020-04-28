@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PhysicsExperiment
 {
-    class Wall
+    class Wall : PhysicsObject
     {
         //public Rectangle Extents { get; set; }
 
@@ -66,7 +66,7 @@ namespace PhysicsExperiment
                 );
         }
 
-        public void Paint(PaintEventArgs e)
+        public override void Paint(PaintEventArgs e)
         {
             Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
             e.Graphics.DrawPolygon(wallPen, Shape);
@@ -88,7 +88,7 @@ namespace PhysicsExperiment
             }
         }
 
-        public float distToEdge(PointF p, PointF l1, PointF l2)
+        public float DistToEdge(PointF p, PointF l1, PointF l2)
         {
             // Repurposed logic from this solution
             // https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
@@ -129,7 +129,7 @@ namespace PhysicsExperiment
             return (float)Math.Sqrt(dx * dx + dy * dy);
 
         }
-        public float distTo(PointF p)
+        public float DistTo(PointF p)
         {
             // For each edge of the wall shape compute the perpendicular distance,
             // then return the minimum (the closest distance between some
@@ -142,7 +142,7 @@ namespace PhysicsExperiment
             for (int i = 0; i < 4; i++)
             {
                 j = i < 3 ? i + 1 : 0;
-                currentDist = distToEdge(p, Shape[i], Shape[j]);
+                currentDist = DistToEdge(p, Shape[i], Shape[j]);
                 result = Math.Min(currentDist, result);
             }
             return result;
