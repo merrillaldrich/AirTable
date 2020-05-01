@@ -9,7 +9,9 @@ through more and more complex iterations. (He tends to want to take on the entir
 all at once, but as my neighbor used to say, if you want to eat a whole watermelon, best 
 do it one bite at a time.)
 
-This program progesses from simple one-dimensional motion to one-dimensional collisions,
+![](images/collisions.gif)
+
+This source code progesses from simple one-dimensional motion to one-dimensional collisions,
 to two dimensional collisions with stationary walls, to 2d collisions of moving objects.
 Each step is stored in it's own numbered branch, if you want to follow along through that
 process.
