@@ -62,6 +62,10 @@ namespace PhysicsExperiment
             isRunning = true;
             Thread thread = new Thread(ExecuteTimer);
             thread.Priority = ThreadPriority.Highest;
+
+            // Mark as background so the thread exits when the main program exits
+            thread.IsBackground = true;
+
             thread.Start();
         }
 
