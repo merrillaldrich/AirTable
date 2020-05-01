@@ -30,7 +30,7 @@ namespace PhysicsExperiment
         Wall W1 = new Wall(new Rectangle(700, 10, 10, 440));
 
         Pen linePen = new Pen(Color.DarkGray, 1);
-        Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
+        Pen wallPen = new Pen(Color.DarkGray, 2) { Alignment = PenAlignment.Center };
         Pen B1Pen = new Pen(Color.DarkBlue, 2) { Alignment = PenAlignment.Inset };
 
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
