@@ -68,7 +68,7 @@ namespace PhysicsExperiment
 
         public override void Paint(PaintEventArgs e)
         {
-            Pen wallPen = new Pen(Color.DarkGray, 1) { Alignment = PenAlignment.Inset };
+            Pen wallPen = new Pen(Color.DarkGray, 2) { Alignment = PenAlignment.Inset };
             e.Graphics.DrawPolygon(wallPen, Shape);
         }
 
